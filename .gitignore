@@ -1,5 +1,6 @@
 Backup
 __pycache__
 .idea
+outputs
 *output.txt
 result.txt

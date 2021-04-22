@@ -308,7 +308,7 @@ class Sudoku:
         return solution
 
 
-def sudoku_solver(file):
+def sudoku_solver(file, output_folder="outputs/", print_puzzle=False, save_text=False):
 
     # Check if input file exists
     if not os.path.isfile(file):
@@ -334,13 +334,24 @@ def sudoku_solver(file):
     # Solve the sudoku puzzle
     puzzle = sudoku_puzzle.solve()
 
-    # Output the solution
-    output_name = file[:-4]
-    output_name = output_name + "_output.txt"
-    np.savetxt(output_name, puzzle, fmt="%s")
+    if save_text:
+        # Output the solution
+        output_name = os.path.basename(file)[:-4]
+        output_name = output_folder + output_name + "_output.txt"
+        np.savetxt(output_name, puzzle, fmt="%s")
+
+    if print_puzzle:
+        print(puzzle)
+
+    return puzzle
 
 
 if __name__ == '__main__':
     file_location = sys.argv[1]
-    sudoku_solver(file_location)
+    output_folder = 'outputs/'
+
+    if not os.path.isdir(output_folder):
+        os.mkdir(output_folder)
+
+    sudoku_solver(file_location, output_folder=output_folder, print_puzzle=True, save_text=True)
 
